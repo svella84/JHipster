@@ -1,0 +1,19 @@
+version: '2'
+services:
+    jhipsterheroku-app:
+        image: jhipsterheroku
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:mysql://jhipsterheroku-mysql:3306/jhipsterheroku?useUnicode=true&characterEncoding=utf8&useSSL=false
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=jhipsterheroku-elasticsearch:9300
+        ports:
+            - 8080:8080
+    jhipsterheroku-mysql:
+        extends:
+            file: mysql.yml
+            service: jhipsterheroku-mysql
+    jhipsterheroku-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: jhipsterheroku-elasticsearch
